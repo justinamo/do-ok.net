@@ -1,0 +1,13 @@
+{% macro item(section, current) -%}
+{% if section == current %}
+    <h1 class="black">{{ section }}</h1>
+{% else %}
+    <h1><a href="/{{ section.lower() }}">{{ section }}</a></h1>
+{% endif %}
+{%- endmacro %}
+
+<nav>
+{% for name in navSections %}
+{{ item(name, thisSection) }}
+{% endfor %}
+</nav>
