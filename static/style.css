@@ -1,5 +1,15 @@
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: 100%;
+}
+
 .black {
   color: black;
+}
+
+.border {
+  padding: 1em;
+  border: 1px solid;
 }
 
 body {
@@ -23,6 +33,7 @@ img {
 nav {
   display: flex;
   justify-content: center;
+  flex-flow: row wrap;
 }
 
 nav > * {
@@ -32,4 +43,17 @@ nav > * {
 
 .tags {
   color: gray;
+}
+
+.x-small {
+  font-size: x-small;
+} 
+
+#reply > div {
+  margin-bottom: 15px; 
+}
+
+textarea.comment {
+  width: 450px;
+  height: 300px;   
 }

@@ -1,1 +1,24 @@
-
+{% extends "base.html" %}
+{% block content %}
+{% include 'thoughts/informationbasedeconomy.html' %}
+<section id="comments">
+{% for comment in comments %}
+  <h6>{{ comment.name }} wrote:</h6>
+  <p>{{ comment.comment }}</p>
+{% endfor %}
+</section>
+<section>
+  <h5>Add a comment</h5>
+  <form id=reply action="/comments/informationbasedeconomy/post" method="POST">
+    <div>
+      <div class="x-small">your name (optional):</div>
+      <input type="text" placeholder="no robots" class="name" />
+    </div>
+    <div>
+      <div class="x-small">your comment:</div>
+      <textarea type="text" class="comment"></textarea>
+    </div>
+    <input type=submit value="post comment"> 
+  </form>
+</section>
+{% endblock %}

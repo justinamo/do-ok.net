@@ -18,7 +18,7 @@ def thoughts():
 
 @app.route('/thoughts/<thoughtname>')
 def thoughtdetail(thoughtname):
-  return render_template('thoughtdetail.html', navSections=sections, thisSection='Thoughts', thoughtname=thoughtname)
+  return render_template(['comments.html', 'thoughts/' + thoughtname + '-comments.html'], navSections=sections)
 
 @app.route('/contact')
 def contact():
