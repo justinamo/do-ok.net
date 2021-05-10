@@ -1,5 +1,17 @@
 {% extends "base.html" %}
 {% block title %}Justin's Thoughts{% endblock %}
 {% block content %}
-{% include 'thoughts/informationbasedeconomy.html' %}
+<h1 class="align-right">Justin's Thoughts</h1>
+<div>
+{% for key in posts %}
+<article class="thought">
+  {% set post = posts[key] %}
+  <h2>{{ post['name'] }}</h2>
+  <h3>{{ post['date'].strftime('%d %B %Y') }}</h3>
+  {% set post_template = 'thoughts/' + post.url + '.html' %}
+  {% include post_template %}
+  {% include 'post_footer.html' with context %}
+</article>
+{% endfor %}
+</div>
 {% endblock %}

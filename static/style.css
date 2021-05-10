@@ -2,9 +2,29 @@
   color: black;
 }
 
+.gray {
+  color: gray;
+}
+
+.x-small {
+  font-size: x-small;
+} 
+
+.small {
+  font-size: small;
+} 
+
+.bold {
+  font-weight: 700; 
+}
+
 .border {
   padding: 1em;
   border: 1px solid;
+}
+
+.align-right {
+  text-align: right;
 }
 
 body {
@@ -22,7 +42,6 @@ body {
 img {
   max-width: 100%;
   display: block; 
-  margin: auto; 
 }
 
 nav {
@@ -36,13 +55,23 @@ nav > * {
   margin: 1em; 
 }
 
-.tags {
-  color: gray;
+article.thought {
+  margin: 3rem auto; 
 }
 
-.x-small {
-  font-size: x-small;
-} 
+article.thought:first-child {
+  margin-top: 0; 
+}
+
+.indent {
+  padding-left: 15px;
+  border-left: 1px solid;
+}
+
+#comments > * {
+  margin-top: 15px; 
+  margin-bottom: 15px; 
+}
 
 #reply > div {
   margin-bottom: 15px; 

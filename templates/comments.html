@@ -1,24 +1,31 @@
 {% extends "base.html" %}
+{% block title %}{{ post.name }}{% endblock %}
 {% block content %}
-{% include 'thoughts/informationbasedeconomy.html' %}
-<section id="comments">
-{% for comment in comments %}
-  <h6>{{ comment.name }} wrote:</h6>
-  <p>{{ comment.comment }}</p>
-{% endfor %}
-</section>
-<section>
-  <h5>Add a comment</h5>
-  <form id=reply action="/comments/informationbasedeconomy/post" method="POST">
-    <div>
-      <div class="x-small">your name (optional):</div>
-      <input type="text" placeholder="no robots" class="name" />
+  <h2>{{ post['name'] }}</h2>
+  <h3>{{ post['date'].strftime('%d %B %Y') }}</h3>
+  {% set post_template = 'thoughts/' + post.url + '.html' %}
+  {% include post_template %}
+  {% include 'post_footer.html' with context %}
+  <section id="comments" class="indent">
+  {% for comment in comments %}
+    <div class="comment">
+      <header class="x-small bold">{{ comment.name }} wrote:</header>
+      <p class="small">{{ comment.text }}</p>
+      <footer class="x-small gray">posted on {{ comment.posted_on }} UTC-4 or 5</footer>
     </div>
-    <div>
-      <div class="x-small">your comment:</div>
-      <textarea type="text" class="comment"></textarea>
-    </div>
-    <input type=submit value="post comment"> 
-  </form>
-</section>
+  {% endfor %}
+  </section>
+  <section>
+    <form id=reply action="/thoughts/{{ post.url }}#reply" method="post">
+      <div>
+        <div class="x-small">your name (optional):</div>
+        <input type="text" placeholder="no robots" name="name" class="name" />
+      </div>
+      <div>
+        <div class="x-small">your comment:</div>
+        <textarea type="text" name="comment" class="comment"></textarea>
+      </div>
+      <input type=submit value="post comment"> 
+    </form>
+  </section>
 {% endblock %}
