@@ -10,7 +10,17 @@
   <h3>{{ post['date'].strftime('%d %B %Y') }}</h3>
   {% set post_template = 'thoughts/' + post.url + '.html' %}
   {% include post_template %}
-  {% include 'post_footer.html' with context %}
+  <footer>
+    {% if post.tags != [] %}
+    <aside class="gray">tagged: {{ ', '.join(post.tags) }}</aside>
+    {% endif %}
+    {% if post.ncomments == 1 %}
+    <a href="/thoughts/{{ post['url'] }}">{{ post.ncomments }} comment</a>
+    {% elif post.ncomments > 0 %}
+    <a href="/thoughts/{{ post['url'] }}">{{ post.ncomments }} comments</a>
+    {% endif %}
+    <a href="/thoughts/{{ post['url'] }}#reply">leave a comment</a>
+  </footer>
 </article>
 {% endfor %}
 </div>

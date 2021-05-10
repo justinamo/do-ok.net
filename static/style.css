@@ -78,6 +78,10 @@ article.thought:first-child {
 }
 
 textarea.comment {
-  width: 450px;
+  width: min(450px, 100%);
   height: 300px;   
+}
+
+footer {
+  margin-bottom: 2em;
 }
