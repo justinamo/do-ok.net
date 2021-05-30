@@ -1,3 +1,8 @@
+a.hidden:link, a.hidden:visited {
+  text-decoration: none; 
+  color: var(--font-color);
+}
+
 .black {
   color: black;
 }
@@ -23,6 +28,10 @@
   border: 1px solid;
 }
 
+.align-center {
+  text-align: center;
+}
+
 .align-right {
   text-align: right;
 }
@@ -40,6 +49,7 @@ body {
 }
 
 img {
+  margin: auto; 
   max-width: 100%;
   display: block; 
 }

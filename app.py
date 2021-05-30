@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from collections import OrderedDict
 import mysql.connector 
+import life_fountain
 
 cnx = mysql.connector.connect(user='justin', host='localhost', database='thoughts')
 cursor = cnx.cursor(buffered=True)
@@ -17,6 +18,11 @@ sections = ['Home', 'Life', 'Projects', 'Thoughts']
 @app.route('/home')
 def home():
   return render_template('home.html', navSections=sections, thisSection='Home')
+
+@app.route('/life')
+def life():
+  fountain = life_fountain.generate()
+  return render_template('life.html', navSections=sections, thisSection='Life', fountain=fountain)
 
 @app.route('/projects')
 def projects():

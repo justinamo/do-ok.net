@@ -1,9 +1,0 @@
-information-based economy
-26 April 2021
-
-- future economy will have two halves: internet-based infrastructure and commerce facilitated by that infrastructure 
-- there will be enough surplus in the infrastructure providers that they will be able to employ many many people, each responsible for some small specific subset of their infrastructure
-- the speed and efficiency of the internet will trump other forms of the market for a good, due to the efficiency and speed of information transfer over the internet (roughly speed of light)
-- for goods that are able to be completely digitized, and where the demand for that good is able to be shifted completely over to the digitized version, the entire exchange of that good will happen over the internet
-- for physical goods, there has to be a separate physical system alongside the internet infrastructure, probably shipping and logistics
-- size of physical infrastructure depends on demand for physical goods by the consumer 

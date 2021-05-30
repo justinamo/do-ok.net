@@ -14,8 +14,12 @@
   <section id="comments" class="indent">
   {% for comment in comments %}
     <div class="comment">
-      <header class="x-small bold">{{ comment.name }} wrote:</header>
-      <p class="small">{{ comment.text }}</p>
+      <p class="small">
+        {% if comment.name != "" %}
+        <span class="x-small bold">{{ comment.name }} wrote:</span>
+	{% endif %}
+        {{ comment.text }}
+      </p>
       <footer class="x-small gray">posted on {{ comment.posted_on }} UTC-4 or 5</footer>
     </div>
   {% endfor %}

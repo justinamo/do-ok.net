@@ -1,0 +1,47 @@
+#life-fountain > * {
+  --size: min(400px, 100%); 
+  width: var(--size); 
+  height: 0; 
+  padding-top: var(--size);
+  border-radius: var(--size);
+  border: 1px solid black;
+  color: black; 
+  text-align: center; 
+  line-height: var(--size); 
+  position: relative;
+  box-sizing: border-box;
+}
+
+#transition {
+  display: none;
+}
+
+#transition > * {
+  border-bottom: 1px dashed black;
+  width: 50%; 
+}
+
+#transition > :first-child {
+  transform: rotate(45deg);
+  transform-origin: right;
+}
+
+#transition > :last-child {
+  transform: rotate(-45deg);
+  transform-origin: left; 
+}
+
+.spacer {
+  display: flex; 
+  flex-flow: row nowrap;
+}
+
+.spacer > :first-child, .spacer > :last-child {
+  width: 50%; 
+  height: 20px; 
+}
+
+.spacer > :first-child {
+  border-right: 1px solid black;
+}
+
