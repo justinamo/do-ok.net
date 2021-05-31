@@ -8,9 +8,9 @@ def generate():
   drops = [
     { 'name': 'learning japanese', 'link': 'https://sshh.nyc/event/class-intro-to-japanese-new-12-week-session-10/' }
   , { 'name': 'working on music (renting studio)' }
-  , { 'name': 'job interviews' }
   , { 'name': 'web developer for i/c artists', 'link': 'https://icartists.net' }
   , { 'name': 'personal website', 'link': '/' }
+  , { 'name': 'Channel App' }
   , { 'name': 'Do Ok EP', 'link': 'https://do-ok.bandcamp.com' }
   , { 'name': 'jmail.link', 'link': 'https://jmail.link' }
   , { 'name': 'en-tranceit' }

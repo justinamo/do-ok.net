@@ -7,11 +7,13 @@
 <div id='life-fountain'>
   {% for drop in fountain %}
   <div style="left: calc(50% - var(--size) / 2 + ((50% - var(--size) / 2) * {{ drop.offset }}))">
-    {% if drop.link %}
-    <a href={{ drop.link }}>{{ drop.name }}</a>
-    {% else %}
-    {{ drop.name }}
-    {% endif %}
+    <div class="translate-up">
+      {% if drop.link %}
+      <a href={{ drop.link }}>{{ drop.name }}</a>
+      {% else %}
+      {{ drop.name }}
+      {% endif %}
+    </div>
   </div>
   {% endfor %}
 </div>
