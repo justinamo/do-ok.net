@@ -1,4 +1,4 @@
-#life-fountain > * {
+#new-yorkk > * {
   --size: min(300px, 100%); 
   width: var(--size); 
   height: 0; 
@@ -16,21 +16,21 @@
   transform: translateY(-150px);
 }
 
-#transition {
+#v {
   display: none;
 }
 
-#transition > * {
+#v > * {
   border-bottom: 1px dashed black;
   width: 50%; 
 }
 
-#transition > :first-child {
+#v > :first-child {
   transform: rotate(45deg);
   transform-origin: right;
 }
 
-#transition > :last-child {
+#v > :last-child {
   transform: rotate(-45deg);
   transform-origin: left; 
 }
