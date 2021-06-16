@@ -1,3 +1,8 @@
+#content {
+  width: unset;
+  max-width: unset; 
+}
+
 #new-yorkk > * {
   --size: min(300px, 100%); 
   width: var(--size); 
@@ -49,3 +54,26 @@
   border-right: 1px solid black;
 }
 
+#new-york {
+  display: grid; 
+  grid-template-rows: 75px 300px 50px 375px;
+  grid-template-columns: 750px 50px 200px 30px 60px;
+}
+
+#new-york > * {
+  border: 1px solid black; 
+  padding: auto;
+}
+
+#janestreet {
+  grid-area: 1 / 1 / 5 / 3;
+}
+
+#nyu {
+  grid-area: 2 / 2 / 3 / 4;
+}
+
+#waxxfm {
+  grid-row: 2 / 4; 
+  grid-column: 5 / 6; 
+}
