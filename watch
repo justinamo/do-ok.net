@@ -1,0 +1,9 @@
+#!/bin/bash
+
+inotifywait -rme modify . @*.swp | while read line; do 
+	echo "$line"; 
+	kill $FLASKPID; 
+	clear;
+	flask run & FLASKPID=$!; 
+	echo $FLASKPID; 
+done
