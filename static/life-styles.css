@@ -3,13 +3,19 @@
   max-width: unset; 
 }
 
-#new-yorkk > * {
+#content > * {
+  padding-left: 10px; 
+  padding-right: 10px;
+}
+
+/* circles */
+#newyorkk > * {
   --size: min(300px, 100%); 
   width: var(--size); 
   height: 0; 
   padding-top: var(--size);
   border-radius: var(--size);
-  border: 1px solid black;
+  border: 2px solid black;
   color: black; 
   text-align: center; 
   line-height: var(--size); 
@@ -21,23 +27,14 @@
   transform: translateY(-150px);
 }
 
-#v {
-  display: none;
+.v {
+  display: block;
+  margin: auto;
+  max-width: 800px; 
 }
 
-#v > * {
-  border-bottom: 1px dashed black;
-  width: 50%; 
-}
-
-#v > :first-child {
-  transform: rotate(45deg);
-  transform-origin: right;
-}
-
-#v > :last-child {
-  transform: rotate(-45deg);
-  transform-origin: left; 
+#n {
+  max-width: min(800px, 70%);
 }
 
 .spacer {
@@ -47,22 +44,42 @@
 
 .spacer > :first-child, .spacer > :last-child {
   width: 50%; 
-  height: 20px; 
+  display: flex; 
+  flex-flow: column wrap; 
+  min-height: 140px;
+  justify-content: center;
+  padding: 1em;
 }
 
 .spacer > :first-child {
-  border-right: 1px solid black;
+  border-right: .5px solid black;
+  align-items: flex-end;
 }
 
-#new-york {
+.spacer > :last-child {
+  border-left: .5px solid black;
+  align-items: flex-start;
+}
+
+.line-break { 
+  text-align: center;
+}
+
+.box {
+  border: 2px solid black; 
+  background-color: var(--background-color); 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  padding: 1em; 
+}
+
+#newyork {
   display: grid; 
-  grid-template-rows: 75px 300px 50px 375px;
-  grid-template-columns: 750px 50px 200px 30px 60px;
-}
-
-#new-york > * {
-  border: 1px solid black; 
-  padding: auto;
+  grid-template-rows: 75px 250px 50px 225px;
+  grid-template-columns: 500px 100px 200px 30px auto;
+  justify-content: center; 
+  background-color: var(--background-color); 
 }
 
 #janestreet {
@@ -76,4 +93,97 @@
 #waxxfm {
   grid-row: 2 / 4; 
   grid-column: 5 / 6; 
+  writing-mode: vertical-rl; 
+  text-orientation: vertical-rl; 
 }
+
+@media screen and (max-width: 1000px) {
+  #newyork {
+    grid-template-rows: 75px 250px 20px 255px;
+    grid-template-columns: 500px 100px 20px 180px;
+  }
+
+  #nyu {
+    grid-area: 2 / 2 / 3 / 5;
+  }
+
+  #waxxfm {
+    grid-row: 4 / 5; 
+    grid-column: 4 / 5; 
+  }
+}
+
+@media screen and (max-width: 800px) {
+  #newyork {
+    grid-template-rows: auto auto auto;
+    grid-template-columns: auto;
+    row-gap: 20px;
+  }
+
+  #newyork > * {
+    padding: 3em;
+  }
+
+  #janestreet {
+    grid-area: 1 / 1 / 2 / 2;
+  }
+
+  #nyu {
+    grid-area: 2 / 1 / 3 / 2;
+  }
+
+  #waxxfm {
+    grid-row: 3 / 4; 
+    grid-column: 1 / 2; 
+    writing-mode: unset;
+    text-orientation: unset;
+  }
+}
+
+.newyorkk.newyork {
+  background-image: linear-gradient(var(--background-color), #c5bcdf);
+}
+
+#newyork, #usc, .newyork.southcarolina, #post16 {
+  --background-color: #c5bcdf;
+  background-color: var(--background-color); 
+}
+
+#rsic {
+  max-width: 250px;
+}
+
+.pre16.post16 {
+  background-image: linear-gradient(#c5bcdf, #eae8e6) ;
+}
+
+#pre16 {
+  --background-color: #eae8e6;
+  background-color: var(--background-color); 
+}
+
+.pre16.childhood {
+  background-image: linear-gradient(#eae8e6, #f46969) ;
+}
+
+#childhood, #parents {
+  --background-color: #f46969;
+  background-color: var(--background-color); 
+}
+#parents {
+  display: flex; 
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  max-width: min(900px, calc(70% + 100px));
+  margin: auto;
+  text-align: center !important; 
+}
+
+#parents > :last-child {
+  text-align: center;; 
+}
+
+body {
+  background-image: linear-gradient(var(--background-color), var(--background-color), #f46969);
+}
+

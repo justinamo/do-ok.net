@@ -12,11 +12,13 @@
     <script>0</script>
     {% include 'nav.html' %}
     <div id="content">{% block content %}{% endblock %}</div>
+    {% block footer %}
     <hr>
     <footer class="align-right">
       <p><u>contact me</u></p> 
       <p>instagram: @justinmoorehi57</p>
       <p>email: justin at do-ok.net</p>
     </footer>
+    {% endblock %}
 </body>
 </html>

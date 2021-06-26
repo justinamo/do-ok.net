@@ -24,4 +24,11 @@
 </article>
 {% endfor %}
 </div>
+<div id="sidebar">
+  {% for tag in tags %}
+  <div class="tag">
+    <a href="?tags={{ tag }}">#{{ tag }}</a>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}

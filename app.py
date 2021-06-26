@@ -30,18 +30,23 @@ def projects():
 
 @app.route('/thoughts')
 def thoughts():
+  tags = []
   posts = OrderedDict()
 
   dispatch('select url, title, date, coalesce(ncomments, 0) as ncomments from posts left join (select post_url, count(*) as ncomments from posts_comments group by post_url) comment_count on posts.url = comment_count.post_url')
   for (url, name, date, ncomments) in cursor:
-      posts[url] = { 'url': url, 'name': name, 'date': date, 'tags': [], 'ncomments': ncomments }
+    posts[url] = { 'url': url, 'name': name, 'date': date, 'tags': [], 'ncomments': ncomments }
   
   dispatch('select * from posts_tags')
   for (post_url, tag) in cursor:
     print('appending tag: ', post_url, tag)
     posts[post_url]['tags'].append(tag) 
 
-  return render_template('thoughts.html', navSections=sections, thisSection='Thoughts', posts=posts)
+  dispatch('select * from tags')
+  for (tag_name, ) in cursor: 
+      tags.append(tag_name)
+    
+  return render_template('thoughts.html', navSections=sections, thisSection='Thoughts', posts=posts, tags=tags)
 
 @app.route('/thoughts/<thoughtname>', methods=['GET', 'POST'])
 def comments(thoughtname):

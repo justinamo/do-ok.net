@@ -1,3 +1,7 @@
+body {
+  margin: 0; 
+}
+
 a.hidden:link, a.hidden:visited {
   text-decoration: none; 
   color: var(--font-color);
@@ -40,7 +44,8 @@ body {
   --font-color: #175715; 
   color: var(--font-color);
   font-family: sans-serif; 
-  background-color: #c6dfbc;
+  --background-color: #c6dfbc;
+  background-color: var(--background-color);
 }
 
 #content {
