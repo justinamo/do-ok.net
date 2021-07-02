@@ -3,11 +3,6 @@
   max-width: unset; 
 }
 
-#content > * {
-  padding-left: 10px; 
-  padding-right: 10px;
-}
-
 /* circles */
 #newyorkk > * {
   --size: min(300px, 100%); 
@@ -187,3 +182,6 @@ body {
   background-image: linear-gradient(var(--background-color), var(--background-color), #f46969);
 }
 
+#southcarolina {
+  background: #f46969;
+}
