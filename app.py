@@ -30,23 +30,38 @@ def projects():
 
 @app.route('/thoughts')
 def thoughts():
-  tags = []
+  ### Retrieve posts and comments
   posts = OrderedDict()
-
   dispatch('select url, title, date, coalesce(ncomments, 0) as ncomments from posts left join (select post_url, count(*) as ncomments from posts_comments group by post_url) comment_count on posts.url = comment_count.post_url')
   for (url, name, date, ncomments) in cursor:
     posts[url] = { 'url': url, 'name': name, 'date': date, 'tags': [], 'ncomments': ncomments }
   
+  ### Handle query parameters and posts' tags
   dispatch('select * from posts_tags')
   for (post_url, tag) in cursor:
     print('appending tag: ', post_url, tag)
     posts[post_url]['tags'].append(tag) 
 
+  ### Filter out query parameters, if they exist
+  request_tags = request.args.get('tags')
+  if request_tags != None:
+    request_tags = request_tags.split(',')
+    to_delete = set([]) 
+    for url in posts: 
+      if len(set(posts[url]['tags']) & set(request_tags)) <= 0: 
+        to_delete.add(url)
+    for url in to_delete:
+      del posts[url]
+
+  tags = []
+
   dispatch('select * from tags')
   for (tag_name, ) in cursor: 
+    if tag_name not in request_tags: 
       tags.append(tag_name)
     
-  return render_template('thoughts.html', navSections=sections, thisSection='Thoughts', posts=posts, tags=tags)
+  ### Render
+  return render_template('thoughts.html', navSections=sections, thisSection='Thoughts', posts=posts, tags=tags, request_tags=request_tags)
 
 @app.route('/thoughts/<thoughtname>', methods=['GET', 'POST'])
 def comments(thoughtname):
