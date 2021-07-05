@@ -1,41 +1,17 @@
-#content {
-  max-width: 1140px; 
-}
-
-.sidebar-container {
-  display: flex; 
-  flex-flow: row nowrap;
-}
-
-#negative-sidebar {
-  flex: 0 999 170px;
-}
-
-#posts {
-  flex: 0 1 800px;
-}
-
 #sidebar {
-  flex: 0 1 150px;
   min-width: 150px;
-  align-self: flex-start;
-  padding: 1rem;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  padding: 1em;
   background: #eee;
-  border-radius: 1rem;
+  border-radius: 1em;
   margin-left: 20px;
-}
-
-#title {
-  padding-right: calc(170px + 2:em);
 }
 
 @media screen and (max-width: 800px) {
   #sidebar {
     display: none;
-  }
-
-  #title {
-    padding-right: 0px;
   }
 }
 
