@@ -1,0 +1,101 @@
+#content {
+  max-width: 1140px; 
+}
+
+.sidebar-container {
+  display: flex; 
+  flex-flow: row nowrap;
+}
+
+#negative-sidebar {
+  flex: 0 999 170px;
+}
+
+#posts {
+  flex: 0 1 800px;
+}
+
+#sidebar {
+  flex: 0 1 150px;
+  min-width: 150px;
+  align-self: flex-start;
+  padding: 1rem;
+  background: #eee;
+  border-radius: 1rem;
+  margin-left: 20px;
+}
+
+#title {
+  padding-right: calc(170px + 2:em);
+}
+
+@media screen and (max-width: 800px) {
+  #sidebar {
+    display: none;
+  }
+
+  #title {
+    padding-right: 0px;
+  }
+}
+
+.tag-box {
+  border: 2px solid black; 
+  padding: .5em; 
+  display: flex; 
+  flex-flow: column wrap; 
+  align-items: flex-start;
+  min-height: 2em;
+}
+
+.tag {
+  border-radius: .7em; 
+  font-size: 12px; 
+  font-style: italic;
+  padding: 2px .7em 4px .5em;
+  margin: 2px;
+  background: lightgray;
+  opacity: 0.7;
+  border: 1px solid darkgray;
+}
+
+.tag:hover {
+  opacity: 1; 
+}
+
+article.thought {
+  margin: 3rem auto; 
+}
+
+article.thought:first-child {
+  margin-top: 0; 
+}
+
+article.thought > footer {
+  display: flex; 
+  flex-flow: row wrap;
+}
+
+article.thought > footer > a:not(.tag) {
+  margin-right: 6px; 
+}
+
+.indent {
+  padding-left: 15px;
+  border-left: 1px solid;
+}
+
+#comments > * {
+  margin-top: 15px; 
+  margin-bottom: 15px; 
+}
+
+#reply > div {
+  margin-bottom: 15px; 
+}
+
+textarea.comment {
+  width: min(450px, 100%);
+  height: 300px;   
+}
+
