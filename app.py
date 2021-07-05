@@ -1,9 +1,21 @@
 from flask import Flask, render_template, request
 from collections import OrderedDict
-import mysql.connector 
 import life_fountain
+import mysql.connector 
+import os
 
-cnx = mysql.connector.connect(user='justin', host='localhost', database='thoughts')
+is_development = os.environ.get("FLASK_ENV") == "development"
+
+if is_development:
+  cnx = mysql.connector.connect(user='justin', host='localhost', database='thoughts')
+else: 
+  db_user = os.environ["DB_USER"]
+  db_pass = os.environ["DB_PASS"]
+  db_socket_dir = os.environ.get("DB_SOCKET_DIR", "/cloudsql")
+  cloud_sql_connection_name = os.environ["CLOUD_SQL_CONNECTION_NAME"]
+  unix_socket = db_socket_dir + "/" + cloud_sql_connection_name
+  cnx = mysql.connector.connect(user=db_user, host='localhost', password=db_pass, database='thoughts', unix_socket=unix_socket)
+
 cursor = cnx.cursor(buffered=True)
 
 def dispatch(query, params=None): 
@@ -44,7 +56,9 @@ def thoughts():
 
   ### Filter out query parameters, if they exist
   request_tags = request.args.get('tags')
-  if request_tags != None:
+  if request_tags == None:
+    request_tags = []
+  else:
     request_tags = request_tags.split(',')
     to_delete = set([]) 
     for url in posts: 
@@ -87,3 +101,6 @@ def comments(thoughtname):
     comments.append({ 'posted_on': posted_on, 'post_url': post_url, 'name': name, 'text': text })
 
   return render_template('comments.html', navSections=sections, post=post, comments=comments)
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export FLASK_ENV=development
 . venv/bin/activate
 inotifywait -rme modify . @*.swp | while read line; do 
 	echo "$line"; 
