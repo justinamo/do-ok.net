@@ -1,6 +1,15 @@
+body {
+  margin: 0px;
+}
+
 #content {
   width: unset;
   max-width: unset; 
+}
+
+#content > *:not(:last-child) {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 /* circles */
