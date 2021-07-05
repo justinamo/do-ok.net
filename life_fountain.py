@@ -7,7 +7,7 @@ def append_offset(drop, offset):
 def generate():
   drops = [
     { 'name': 'learning japanese', 'link': 'https://sshh.nyc/event/class-intro-to-japanese-new-12-week-session/' }
-  , { 'name': 'i/c artists webpage', 'link': 'https://icartists.net' }
+  , { 'name': 'i/c artists webpage', 'link': '/projects#icartists' }
   , { 'name': 'personal website', 'link': '/' }
   , { 'name': 'Do Ok EP', 'link': 'https://do-ok.bandcamp.com' }
   , { 'name': 'jmail.link', 'link': 'https://jmail.link' }
