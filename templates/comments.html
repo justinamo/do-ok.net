@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% block title %}{{ post.name }}{% endblock %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="/static/thought-styles.css" type="text/css" />
+{% endblock %}
 {% block content %}
   <h2>{{ post['name'] }}</h2>
   <h3>{{ post['date'].strftime('%d %B %Y') }}</h3>

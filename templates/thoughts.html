@@ -5,29 +5,36 @@
 {% endmacro %}
 {% extends "base.html" %}
 {% block title %}Justin's Thoughts{% endblock %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="/static/thought-styles.css" type="text/css" />
+{% endblock %}
 {% block content %}
-<h1 class="align-right">Justin's Thoughts</h1>
-<div class="relative">
-  {% for key in posts %}
-  <article class="thought">
-    {% set post = posts[key] %}
-    <h2>{{ post['name'] }}</h2>
-    <h3>{{ post['date'].strftime('%d %B %Y') }}</h3>
-    {% set post_template = 'thoughts/' + post.url + '.html' %}
-    {% include post_template %}
-    <footer>
-      {% if post.ncomments == 1 %}
-      <a href="/thoughts/{{ post['url'] }}">{{ post.ncomments }} comment</a>
-      {% elif post.ncomments > 0 %}
-      <a href="/thoughts/{{ post['url'] }}">{{ post.ncomments }} comments</a>
-      {% endif %}
-      <a href="/thoughts/{{ post['url'] }}#reply">leave a comment</a>
-      {% for tagname in post.tags %}
-      {{ render_tag(tagname) }}
-      {% endfor %}
-    </footer>
-  </article>
-  {% endfor %}
+<h1 class="align-right" id="title">Justin's Thoughts</h1>
+<div class="relative sidebar-container">
+  <div id="negative-sidebar"></div>
+  <div id="posts">
+    {% for key in posts %}
+    <article class="thought">
+      {% set post = posts[key] %}
+      <h2>{{ post['name'] }}</h2>
+      <h3>{{ post['date'].strftime('%d %B %Y') }}</h3>
+      {% set post_template = 'thoughts/' + post.url + '.html' %}
+      {% include post_template %}
+      <footer>
+	{% if post.ncomments == 1 %}
+	<a href="/thoughts/{{ post['url'] }}">{{ post.ncomments }} comment</a>
+	{% elif post.ncomments > 0 %}
+	<a href="/thoughts/{{ post['url'] }}">{{ post.ncomments }} comments</a>
+	{% endif %}
+	<a href="/thoughts/{{ post['url'] }}#reply">leave a comment</a>
+	{% for tagname in post.tags %}
+	{{ render_tag(tagname) }}
+	{% endfor %}
+      </footer>
+    </article>
+    {% endfor %}
+  </div>
   <div id="sidebar">
     <script src="static/interactivetags.js"></script>
     <span class="black small">Selected tags:</span>
