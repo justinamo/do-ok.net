@@ -40,19 +40,53 @@ def life():
 def projects():
   return render_template('projects.html', navSections=sections, thisSection='Projects')
 
-@app.route('/thoughts')
-def thoughts():
-  ### Retrieve posts and comments
+def retrieve_posts():
   posts = OrderedDict()
-  dispatch('select url, title, date, coalesce(ncomments, 0) as ncomments from posts left join (select post_url, count(*) as ncomments from posts_comments group by post_url) comment_count on posts.url = comment_count.post_url')
+
+  dispatch('select url, title, date, coalesce(ncomments, 0) as ncomments from posts left join (select post_url, count(*) as ncomments from posts_comments group by post_url) comment_count on posts.url = comment_count.post_url order by date desc')
   for (url, name, date, ncomments) in cursor:
     posts[url] = { 'url': url, 'name': name, 'date': date, 'tags': [], 'ncomments': ncomments }
   
-  ### Handle query parameters and posts' tags
   dispatch('select * from posts_tags')
   for (post_url, tag) in cursor:
     print('appending tag: ', post_url, tag)
     posts[post_url]['tags'].append(tag) 
+
+  return posts
+
+def paginate(posts, page_length):
+  paginated = []
+  index = 0
+  page = []
+  for key in posts:
+    if index % page_length == 0 and index > 0: 
+      print("appending page")
+      paginated.append(page)
+      page = []
+    page.append(posts[key])
+    index += 1 
+  paginated.append(page)
+  return paginated
+
+def retrieve_tag_names(request_tags):
+  tags = []
+  dispatch('select * from tags')
+  for (tag_name, ) in cursor: 
+    if tag_name not in request_tags: 
+      tags.append(tag_name)
+  return tags
+
+@app.route('/thoughts')
+def thoughts():
+  return thoughts_page(1)
+
+@app.route('/thoughts/<int:page_number>')
+def thoughts_page(page_number):
+  page_length = 3
+
+  posts = retrieve_posts()
+  paginated = paginate(posts, page_length)
+  print(paginated[1])
 
   ### Filter out query parameters, if they exist
   request_tags = request.args.get('tags')
@@ -67,15 +101,22 @@ def thoughts():
     for url in to_delete:
       del posts[url]
 
-  tags = []
+  tags = retrieve_tag_names(request_tags)
 
-  dispatch('select * from tags')
-  for (tag_name, ) in cursor: 
-    if tag_name not in request_tags: 
-      tags.append(tag_name)
-    
-  ### Render
-  return render_template('thoughts.html', navSections=sections, thisSection='Thoughts', posts=posts, tags=tags, request_tags=request_tags)
+  return render_template(
+          'thoughts.html', 
+          navSections=sections, 
+          thisSection='Thoughts', 
+          posts=paginated[page_number - 1],
+          tags=tags, 
+          request_tags=request_tags,
+          page=page_number,
+          total_pages=len(paginated))
+
+@app.route('/thoughts/archive')
+def archive(): 
+  posts = retrieve_posts()
+  return render_template('archive.html', navSections=sections, posts=posts)
 
 @app.route('/thoughts/<thoughtname>', methods=['GET', 'POST'])
 def comments(thoughtname):

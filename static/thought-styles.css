@@ -1,15 +1,22 @@
 #sidebar {
-  min-width: 150px;
+  min-width: 170px;
   position: absolute;
   left: 100%;
   top: 0;
-  padding: 1em;
-  background: #eee;
-  border-radius: 1em;
   margin-left: 20px;
 }
 
-@media screen and (max-width: 800px) {
+#sidebar > *:not(#tag-selector) {
+  margin-top: 3em;
+}
+
+#tag-selector {
+  padding: 1em;
+  background: #eee;
+  border-radius: 1em;
+}
+
+@media screen and (max-width: 1250px) {
   #sidebar {
     display: none;
   }
@@ -43,6 +50,11 @@ article.thought {
   margin: 3rem auto; 
 }
 
+article.thought > section {
+  overflow: hidden;
+  text-overflow: "word";
+}
+
 article.thought:first-child {
   margin-top: 0; 
 }
@@ -54,6 +66,12 @@ article.thought > footer {
 
 article.thought > footer > a:not(.tag) {
   margin-right: 6px; 
+}
+
+#post-navigation {
+  display: flex; 
+  justify-content: center;
+  flex-flow: row nowrap;
 }
 
 .indent {

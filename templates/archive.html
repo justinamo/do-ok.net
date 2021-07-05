@@ -1,0 +1,31 @@
+{% macro render_tag(tag_name) -%}
+<a href="?tags={{ tag_name }}" class="hidden tag" draggable="true">
+  <span class="black">#{{ tag_name }}</span>
+</a>
+{% endmacro %}
+{% extends "base.html" %}
+{% block title %}Justin's Thought Archive{% endblock %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="/static/thought-styles.css" type="text/css" />
+{% endblock %}
+{% block content %}
+<h1>Archive</h1>
+{% for key in posts %}
+<article class="thought">
+  {% set post = posts[key] %}
+  <a href="/thoughts/{{ post['url'] }}"><h2>{{ post['name'] }}</h2></a>
+  <h3>{{ post['date'].strftime('%d %B %Y') }}</h3>
+  <footer>
+    {% if post.ncomments == 1 %}
+    <a href="/thoughts/{{ post['url'] }}">{{ post.ncomments }} comment</a>
+    {% elif post.ncomments > 0 %}
+    <a href="/thoughts/{{ post['url'] }}">{{ post.ncomments }} comments</a>
+    {% endif %}
+    {% for tagname in post.tags %}
+    {{ render_tag(tagname) }}
+    {% endfor %}
+  </footer>
+</article>
+{% endfor %}
+{% endblock %}

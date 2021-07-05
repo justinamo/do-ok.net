@@ -11,44 +11,54 @@
 {% endblock %}
 {% block content %}
 <h1 class="align-right" id="title">Justin's Thoughts</h1>
-<div class="relative sidebar-container">
-  <div id="negative-sidebar"></div>
-  <div id="posts">
-    {% for key in posts %}
-    <article class="thought">
-      {% set post = posts[key] %}
-      <h2>{{ post['name'] }}</h2>
-      <h3>{{ post['date'].strftime('%d %B %Y') }}</h3>
-      {% set post_template = 'thoughts/' + post.url + '.html' %}
-      {% include post_template %}
-      <footer>
-	{% if post.ncomments == 1 %}
-	<a href="/thoughts/{{ post['url'] }}">{{ post.ncomments }} comment</a>
-	{% elif post.ncomments > 0 %}
-	<a href="/thoughts/{{ post['url'] }}">{{ post.ncomments }} comments</a>
-	{% endif %}
-	<a href="/thoughts/{{ post['url'] }}#reply">leave a comment</a>
-	{% for tagname in post.tags %}
+<div id="posts" class="relative">
+  {% for post in posts %}
+  <article class="thought">
+    <section>
+    <h2>{{ post['name'] }}</h2>
+    <h3>{{ post['date'].strftime('%d %B %Y') }}</h3>
+    {% set post_template = 'thoughts/' + post.url + '.html' %}
+    {% include post_template %}
+    </section>
+    <footer>
+      <a href="/thoughts/{{ post['url'] }}">view</a>
+      {% if post.ncomments > 0 %}
+      <a href="/thoughts/{{ post['url'] }}#reply">leave a comment ({{ post.ncomments }})</a>
+      {% else %}
+      <a href="/thoughts/{{ post['url'] }}#reply">leave a comment</a>
+      {% endif %}
+      {% for tagname in post.tags %}
+      {{ render_tag(tagname) }}
+      {% endfor %}
+    </footer>
+  </article>
+  {% endfor %}
+  <nav id="post-navigation">
+    {% if page > 1 %}
+    <a class="unset-color" href="/thoughts/{{ page - 1 }}">newer</a>
+    {% endif %}
+    {% if page < total_pages %}
+    <a class="unset-color" href="/thoughts/{{ page + 1 }}">older</a>
+    {% endif %}
+  </nav>
+
+  <div id="sidebar">
+    <div id="tag-selector">
+      <script src="static/interactivetags.js"></script>
+      <span class="black small">Selected tags:</span>
+      <div id="activetags" class="tag-box dropzone">
+	{% for tagname in request_tags %}
 	{{ render_tag(tagname) }}
 	{% endfor %}
-      </footer>
-    </article>
-    {% endfor %}
-  </div>
-  <div id="sidebar">
-    <script src="static/interactivetags.js"></script>
-    <span class="black small">Selected tags:</span>
-    <div id="activetags" class="tag-box dropzone">
-      {% for tagname in request_tags %}
-      {{ render_tag(tagname) }}
-      {% endfor %}
+      </div>
+      <span class="black small">Available tags:</span>
+      <div class="tag-box dropzone">
+	{% for tagname in tags %}
+	{{ render_tag(tagname) }}
+	{% endfor %}
+      </div>
     </div>
-    <span class="black small">Available tags:</span>
-    <div class="tag-box dropzone">
-      {% for tagname in tags %}
-      {{ render_tag(tagname) }}
-      {% endfor %}
-    </div>
+    <a href="/thoughts/archive">archive</a>
   </div>
 </div>
 {% endblock %}

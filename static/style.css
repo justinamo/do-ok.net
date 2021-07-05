@@ -40,6 +40,10 @@ a.hidden:link, a.hidden:visited {
   position: relative;
 }
 
+.unset-color {
+  color: unset;
+}
+
 body {
   --font-color: #175715; 
   color: var(--font-color);
