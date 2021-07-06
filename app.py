@@ -89,14 +89,15 @@ def parse_tags(query_parameters):
 
 
 def filter_posts(posts, request_tags):
-    to_delete = set([])
+    if len(request_tags) > 1:
+        to_delete = set([])
 
-    for url in posts:
-        if len(set(posts[url]["tags"]) & set(request_tags)) <= 0:
-            to_delete.add(url)
-            
-    for url in to_delete:
-        del posts[url]
+        for url in posts:
+            if len(set(posts[url]["tags"]) & set(request_tags)) <= 0:
+                to_delete.add(url)
+
+        for url in to_delete:
+            del posts[url]
 
     return posts
 
