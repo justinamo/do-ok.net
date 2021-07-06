@@ -68,12 +68,6 @@ article.thought > footer > a:not(.tag) {
   margin-right: 6px; 
 }
 
-#post-navigation {
-  display: flex; 
-  justify-content: center;
-  flex-flow: row nowrap;
-}
-
 .indent {
   padding-left: 15px;
   border-left: 1px solid;

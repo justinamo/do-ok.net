@@ -1,5 +1,5 @@
-{% macro render_tag(tag_name) -%}
-<a href="?tags={{ tag_name }}" class="hidden tag" draggable="true">
+{% macro render_tag(tag_name, is_draggable) -%}
+<a href="?tags={{ tag_name }}" class="hidden tag" draggable="{{ is_draggable }}">
   <span class="black">#{{ tag_name }}</span>
 </a>
 {% endmacro %}
@@ -10,12 +10,18 @@
 <link rel="stylesheet" href="/static/thought-styles.css" type="text/css" />
 {% endblock %}
 {% block content %}
-<h1 class="align-right" id="title">Justin's Thoughts</h1>
+<a href="/thoughts" class="hidden">
+  <h1 class="align-right" id="title">Justin's Thoughts</h1>
+</a>
 <div id="posts" class="relative">
   {% for post in posts %}
   <article class="thought">
     <section>
-    <h2>{{ post['name'] }}</h2>
+    <h2>{{ post['name'] }}
+      {% for tagname in post.tags %}
+      {{ render_tag(tagname, "false") }}
+      {% endfor %}
+    </h2>
     <h3>{{ post['date'].strftime('%d %B %Y') }}</h3>
     {% set post_template = 'thoughts/' + post.url + '.html' %}
     {% include post_template %}
@@ -27,9 +33,6 @@
       {% else %}
       <a href="/thoughts/{{ post['url'] }}#reply">leave a comment</a>
       {% endif %}
-      {% for tagname in post.tags %}
-      {{ render_tag(tagname) }}
-      {% endfor %}
     </footer>
   </article>
   {% endfor %}
@@ -48,13 +51,13 @@
       <span class="black small">Selected tags:</span>
       <div id="activetags" class="tag-box dropzone">
 	{% for tagname in request_tags %}
-	{{ render_tag(tagname) }}
+	{{ render_tag(tagname, "true") }}
 	{% endfor %}
       </div>
       <span class="black small">Available tags:</span>
       <div class="tag-box dropzone">
 	{% for tagname in tags %}
-	{{ render_tag(tagname) }}
+	{{ render_tag(tagname, "true") }}
 	{% endfor %}
       </div>
     </div>
