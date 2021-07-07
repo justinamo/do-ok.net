@@ -37,13 +37,23 @@
   </article>
   {% endfor %}
   <nav id="post-navigation">
-    {% if page > 1 %}
-    <a class="unset-color" href="/thoughts/{{ page - 1 }}">newer</a>
-    {% endif %}
-    {% if page < total_pages %}
-    <a class="unset-color" href="/thoughts/{{ page + 1 }}">older</a>
+    {% if tags_query == None %}
+      {% if page > 1 %}
+      <a class="unset-color" href="/thoughts/{{ page - 1 }}">newer</a>
+      {% endif %}
+      {% if page < total_pages %}
+      <a class="unset-color" href="/thoughts/{{ page + 1 }}">older</a>
+      {% endif %}
+    {% else %}
+      {% if page > 1 %}
+      <a class="unset-color" href="/thoughts/{{ page - 1 }}?tags={{ tags_query }}">newer</a>
+      {% endif %}
+      {% if page < total_pages %}
+      <a class="unset-color" href="/thoughts/{{ page + 1 }}?tags={{ tags_query }}">older</a>
+      {% endif %}
     {% endif %}
   </nav>
+  <a class="align-right" href="/thoughts/archive">archive</a>
 
   <div id="sidebar">
     <div id="tag-selector">
@@ -55,13 +65,12 @@
 	{% endfor %}
       </div>
       <span class="black small">Available tags:</span>
-      <div class="tag-box dropzone">
+      <div id="othertags" class="tag-box dropzone">
 	{% for tagname in tags %}
 	{{ render_tag(tagname, "true") }}
 	{% endfor %}
       </div>
     </div>
-    <a href="/thoughts/archive">archive</a>
   </div>
 </div>
 {% endblock %}

@@ -35,7 +35,7 @@ document.addEventListener("drop", function(event) {
     fillActiveTags();
     console.log("activetags: ", activeTags);
 
-    if (event.target.id === "activetags") {
+    if (event.target.id === "activetags" || event.target.id === "othertags") {
       window.location.search = "tags=" + activeTags.join(',');
     }
   }

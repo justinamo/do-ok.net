@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from collections import OrderedDict
 import life_fountain
 import mysql.connector
@@ -89,7 +89,7 @@ def parse_tags(query_parameters):
 
 
 def filter_posts(posts, request_tags):
-    if len(request_tags) > 1:
+    if len(request_tags) > 0:
         to_delete = set([])
 
         for url in posts:
@@ -137,23 +137,31 @@ def thoughts_page(page_number):
 
     posts = retrieve_posts()
 
+    tags_query = request.args.get("tags")
     ### Filter out query parameters, if they exist
-    request_tags = parse_tags(request.args.get("tags"))
+    request_tags = parse_tags(tags_query)
     posts = filter_posts(posts, request_tags)
+    print(posts)
 
     paginated = paginate(posts, page_length)
     tags = retrieve_tag_names(request_tags)
 
-    return render_template(
-        "thoughts.html",
-        navSections=sections,
-        thisSection="Thoughts",
-        posts=paginated[page_number - 1],
-        tags=tags,
-        request_tags=request_tags,
-        page=page_number,
-        total_pages=len(paginated),
-    )
+    try: 
+        posts = paginated[page_number - 1]
+        return render_template(
+            "thoughts.html",
+            navSections=sections,
+            thisSection="Thoughts",
+            posts=posts,
+            tags=tags,
+            request_tags=request_tags,
+            tags_query=tags_query,
+            page=page_number,
+            total_pages=len(paginated),
+        )
+    except IndexError:
+        return redirect(url_for("thoughts_page", page_number=len(paginated)) + "?tags=" + tags_query)
+
 
 
 @app.route("/thoughts/archive")
@@ -175,6 +183,10 @@ def comments(thoughtname):
         cnx.commit()
 
     dispatch("select * from posts where url = %s order by date desc", (thoughtname,))
+
+    if cursor.rowcount == 0:
+        return render_template("404.html", navSections=sections, resource_name=thoughtname)
+
     for (url, name, date, html) in cursor:
         post = {"url": url, "name": name, "date": date, "html": html, "tags": []}
 
