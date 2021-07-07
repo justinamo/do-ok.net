@@ -38,21 +38,21 @@ sections = ["Home", "Life", "Projects", "Thoughts"]
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template("home.html", navSections=sections, thisSection="Home")
+    return render_template("home.html.jinja", navSections=sections, thisSection="Home")
 
 
 @app.route("/life")
 def life():
     fountain = life_fountain.generate()
     return render_template(
-        "life.html", navSections=sections, thisSection="Life", fountain=fountain
+        "life.html.jinja", navSections=sections, thisSection="Life", fountain=fountain
     )
 
 
 @app.route("/projects")
 def projects():
     return render_template(
-        "projects.html", navSections=sections, thisSection="Projects"
+        "projects.html.jinja", navSections=sections, thisSection="Projects"
     )
 
 
@@ -149,7 +149,7 @@ def thoughts_page(page_number):
     try: 
         posts = paginated[page_number - 1]
         return render_template(
-            "thoughts.html",
+            "thoughts.html.jinja",
             navSections=sections,
             thisSection="Thoughts",
             posts=posts,
@@ -167,7 +167,7 @@ def thoughts_page(page_number):
 @app.route("/thoughts/archive")
 def archive():
     posts = retrieve_posts()
-    return render_template("archive.html", navSections=sections, posts=posts)
+    return render_template("archive.html.jinja", navSections=sections, posts=posts)
 
 
 @app.route("/thoughts/<thoughtname>", methods=["GET", "POST"])
@@ -185,7 +185,7 @@ def comments(thoughtname):
     dispatch("select * from posts where url = %s order by date desc", (thoughtname,))
 
     if cursor.rowcount == 0:
-        return render_template("404.html", navSections=sections, resource_name=thoughtname)
+        return render_template("404.html.jinja", navSections=sections, resource_name=thoughtname)
 
     for (url, name, date, html) in cursor:
         post = {"url": url, "name": name, "date": date, "html": html, "tags": []}
@@ -203,7 +203,7 @@ def comments(thoughtname):
         )
 
     return render_template(
-        "comments.html", navSections=sections, post=post, comments=comments
+        "comments.html.jinja", navSections=sections, post=post, comments=comments
     )
 
 

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.html.jinja" %}
 {% block title %}{{ post.name }}{% endblock %}
 {% block head %}
 {{ super() }}
@@ -7,7 +7,7 @@
 {% block content %}
   <h2>{{ post['name'] }}</h2>
   <h3>{{ post['date'].strftime('%d %B %Y') }}</h3>
-  {% set post_template = 'thoughts/' + post.url + '.html' %}
+  {% set post_template = 'thoughts/' + post.url + '.html.jinja' %}
   {% include post_template %}
   <footer>
     {% if post.tags != [] %}
