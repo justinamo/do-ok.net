@@ -3,6 +3,7 @@
 {% block head %}
 {{ super() }}
 <link rel="stylesheet" href="/static/thought-styles.css" type="text/css" />
+<script src="https://hcaptcha.com/1/api.js" async defer></script>
 {% endblock %}
 {% block content %}
   <h2>{{ post['name'] }}</h2>
@@ -39,6 +40,7 @@
         <textarea type="text" name="comment" class="comment"></textarea>
       </div>
       <input type=submit value="post comment"> 
+      <div class="h-captcha" data-sitekey="0b5339fc-4428-4b84-9eb0-e9079858f111"></div>
     </form>
   </section>
 {% endblock %}
