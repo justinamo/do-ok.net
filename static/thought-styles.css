@@ -78,7 +78,7 @@ article.thought > footer > a:not(.tag) {
   margin-bottom: 15px; 
 }
 
-#reply > div {
+#reply > * {
   margin-bottom: 15px; 
 }
 
