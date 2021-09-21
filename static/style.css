@@ -11,6 +11,10 @@ a.hidden:link, a.hidden:visited {
   color: gray;
 }
 
+.red {
+  color: red;
+}
+
 .x-small {
   font-size: x-small;
 } 

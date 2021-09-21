@@ -1,14 +1,17 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from collections import OrderedDict
 import life_fountain
 import mysql.connector
 import os
+import requests
 
 is_development = os.environ.get("FLASK_ENV") == "development"
 
 if is_development:
+    hcaptcha_secret = "0x0000000000000000000000000000000000000000"
     cnx = mysql.connector.connect(user="justin", host="localhost", database="thoughts")
 else:
+    hcaptcha_secret = os.environ["HCAPTCHA_SECRET"] 
     db_user = os.environ["DB_USER"]
     db_pass = os.environ["DB_PASS"]
     db_socket_dir = os.environ.get("DB_SOCKET_DIR", "/cloudsql")
@@ -24,7 +27,6 @@ else:
 
 cursor = cnx.cursor(buffered=True)
 
-
 def dispatch(query, params=None):
     print("executing query: " + query)
     cursor.execute(query, params)
@@ -34,6 +36,10 @@ app = Flask(__name__)
 
 sections = ["Home", "Life", "Projects", "Thoughts"]
 
+@app.route('/robots.txt')
+@app.route('/sitemap.xml')
+def static_from_root():
+    return send_from_directory(app.static_folder, request.path[1:])
 
 @app.route("/")
 @app.route("/home")
@@ -172,15 +178,37 @@ def archive():
 
 @app.route("/thoughts/<thoughtname>", methods=["GET", "POST"])
 def comments(thoughtname):
+    captcha_verification_failed = False    
+
+    user_name = ""
+    user_comment_draft = ""
+
     if request.method == "POST":
         print("recieved post request")
         name = request.form["name"]
         text = request.form["comment"]
-        dispatch(
-            "insert into posts_comments (post_url, name, text) values (%s, %s, %s)",
-            (thoughtname, name, text),
-        )
-        cnx.commit()
+        hcaptcha_token = request.form['h-captcha-response']
+
+        data = {}
+        data["response"] = hcaptcha_token
+        data["secret"] = hcaptcha_secret
+
+        response = requests.post("https://hcaptcha.com/siteverify", data=data)
+
+        print(response.json())
+        success = response.json()['success']
+        # test response in JSON format
+
+        if success:
+            dispatch(
+                "insert into posts_comments (post_url, name, text) values (%s, %s, %s)",
+                (thoughtname, name, text),
+            )
+            cnx.commit()
+        else: 
+            captcha_verification_failed = True
+            user_name = name
+            user_comment_draft = text
 
     dispatch("select * from posts where url = %s order by date desc", (thoughtname,))
 
@@ -204,7 +232,7 @@ def comments(thoughtname):
 
     return render_template(
         "comments.html.jinja", navSections=sections, post=post, comments=comments
-    )
+    , captcha_verification_failed=captcha_verification_failed, user_name=user_name, user_comment_draft=user_comment_draft)
 
 
 if __name__ == "__main__":

@@ -87,3 +87,6 @@ textarea.comment {
   height: 300px;   
 }
 
+.comment > p > .comment-body {
+  white-space: pre-wrap;
+}

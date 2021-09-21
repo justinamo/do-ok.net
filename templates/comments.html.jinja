@@ -23,7 +23,7 @@
         {% if comment.name != "" %}
         <span class="x-small bold">{{ comment.name }} wrote:</span>
 	{% endif %}
-        {{ comment.text }}
+        <span class="comment-body">{{ comment.text }}</span>
       </p>
       <footer class="x-small gray">posted on {{ comment.posted_on }} UTC-4 or 5</footer>
     </div>
@@ -33,14 +33,27 @@
     <form id=reply action="/thoughts/{{ post.url }}#reply" method="post">
       <div>
         <div class="x-small">your name (optional):</div>
-        <input type="text" placeholder="no robots" name="name" class="name" />
+        {% if captcha_verification_failed %}
+          <input type="text" placeholder="no robots" name="name" class="name" value="{{ user_name }}" />
+        {% else %}
+          <input type="text" placeholder="no robots" name="name" class="name" />
+        {% endif %}
       </div>
       <div>
         <div class="x-small">your comment:</div>
+        {% if captcha_verification_failed %}
+        <textarea type="text" name="comment" class="comment">{{ user_comment_draft }}</textarea>
+	{% else %}
         <textarea type="text" name="comment" class="comment"></textarea>
+        {% endif %}
       </div>
-      <input type=submit value="post comment"> 
       <div class="h-captcha" data-sitekey="0b5339fc-4428-4b84-9eb0-e9079858f111"></div>
+      {% if captcha_verification_failed %}
+        <div class="x-small red">Captcha verification failed.</div> 
+      {% else %}
+        <div class="x-small">Comment posted successfully!</div> 
+      {% endif %}
+      <input type=submit value="post comment"> 
     </form>
   </section>
 {% endblock %}
