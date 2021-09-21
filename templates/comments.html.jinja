@@ -50,7 +50,7 @@
       <div class="h-captcha" data-sitekey="0b5339fc-4428-4b84-9eb0-e9079858f111"></div>
       {% if captcha_verification_failed %}
         <div class="x-small red">Captcha verification failed.</div> 
-      {% else %}
+      {% elif posted_successfully %}
         <div class="x-small">Comment posted successfully!</div> 
       {% endif %}
       <input type=submit value="post comment"> 

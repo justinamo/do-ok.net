@@ -179,6 +179,7 @@ def archive():
 @app.route("/thoughts/<thoughtname>", methods=["GET", "POST"])
 def comments(thoughtname):
     captcha_verification_failed = False    
+    posted_successfully = False    
 
     user_name = ""
     user_comment_draft = ""
@@ -205,6 +206,7 @@ def comments(thoughtname):
                 (thoughtname, name, text),
             )
             cnx.commit()
+            posted_successfully = True
         else: 
             captcha_verification_failed = True
             user_name = name
@@ -231,8 +233,14 @@ def comments(thoughtname):
         )
 
     return render_template(
-        "comments.html.jinja", navSections=sections, post=post, comments=comments
-    , captcha_verification_failed=captcha_verification_failed, user_name=user_name, user_comment_draft=user_comment_draft)
+        "comments.html.jinja"
+        , navSections=sections
+        , post=post
+        , comments=comments
+        , captcha_verification_failed=captcha_verification_failed
+        , posted_successfully=posted_successfully
+        , user_name=user_name
+        , user_comment_draft=user_comment_draft)
 
 
 if __name__ == "__main__":
