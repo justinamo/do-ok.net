@@ -226,8 +226,8 @@ def comments(thoughtname):
         post["tags"].append(tag)
 
     comments = []
-    dispatch("select * from posts_comments where post_url = %s", (thoughtname,))
-    for (posted_on, post_url, name, text) in cursor:
+    dispatch("select * from posts_comments where post_url = %s and hidden = false", (thoughtname,))
+    for (posted_on, post_url, name, text, hidden) in cursor:
         comments.append(
             {"posted_on": posted_on, "post_url": post_url, "name": name, "text": text}
         )
