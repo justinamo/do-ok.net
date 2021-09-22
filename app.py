@@ -66,7 +66,7 @@ def retrieve_posts():
     posts = OrderedDict()
 
     dispatch(
-        "select url, title, date, coalesce(ncomments, 0) as ncomments from posts left join (select post_url, count(*) as ncomments from posts_comments group by post_url) comment_count on posts.url = comment_count.post_url order by date desc"
+        "select url, title, date, coalesce(ncomments, 0) as ncomments from posts left join (select post_url, count(*) as ncomments from posts_comments where hidden = false group by post_url) comment_count on posts.url = comment_count.post_url order by date desc"
     )
     for (url, name, date, ncomments) in cursor:
         posts[url] = {
